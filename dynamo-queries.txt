@@ -1,0 +1,57 @@
+//SCAN TABLE:
+var params = {
+    TableName: 'Market',
+    ReturnConsumedCapacity: 'NONE'
+};
+dynamodb.scan(params, function(err, data) {
+    if (err) ppJson(err); // an error occurred
+    else ppJson(data); // successful response
+});
+
+
+//INSERT MARKET ITEMS:
+var params = {
+    RequestItems: {
+        Market: [
+            { 
+                PutRequest: {
+                    Item: {     
+                        itemID: "1",
+                        itemName: "Panela",
+                        itemCount: "2",
+                        itemMeasureUnity: "Libra",
+                        itemPrice: "2K"
+                    }
+                }
+            },
+            { 
+                PutRequest: {
+                    Item: {     
+                        itemID: "2",
+                        itemName: "Yuca",
+                        itemCount: "5",
+                        itemMeasureUnity: "Kilo",
+                        itemPrice: "1K"
+                    }
+                }
+            },
+            { 
+                PutRequest: {
+                    Item: {     
+                        itemID: "3",
+                        itemName: "Leche",
+                        itemCount: "5",
+                        itemMeasureUnity: "Litro",
+                        itemPrice: "2K"
+                    }
+                }
+            }
+        ],
+    },
+    ReturnConsumedCapacity: 'NONE', 
+    ReturnItemCollectionMetrics: 'NONE', 
+};
+docClient.batchWrite(params, function(err, data) {
+    if (err) ppJson(err); 
+    else ppJson(data); 
+});
